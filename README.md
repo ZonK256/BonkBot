@@ -1,26 +1,22 @@
 # BonkBot
-Discord bot made to enchance your roleplay experience 🎉
+Discord bot made to enhance your roleplay experience 🎉
 
+Disclaimer: this bot (as for current state) is meant to be used with another general-purpose bot (such as Carl). I simply added some features that I felt were lacking and stated, that wouldn't be added in the future by the developer. Most of them are designed for a roleplay server.
 
-Disclaimer: this bot (as for current state) is meant to be used with other general-purpose bot (such as [Carl](https://carl.gg)). I simply added some features that I felt were lacking and stated, that wouldn't be added in the future by developer. Most of them are designed for roleplay server.
-
-## Fearutes for users:
+## Features for users:
 * Create comments (temp messages) by starting them with "//"
 * Type in temporary channels (messages will be deleted after 24h)
-* Claim spacific channel by typing in them
-* Climb in leaderboard by posting longer responses in threads
+* Claim specific channel by typing in them
+* Climb in the leaderboard by posting longer responses in threads
 
 ## Features for admins:
-* Purge messages in channel from newest to specifig message ID (excluding them)
-* Check last response by player's character in thread
-* Move channel to specific category in alphabetic order
+* Purge messages in the channel from newest to specific message ID (excluding them)
+* Check last response by the player's character in the thread
+* Move channel to a specific category in alphabetic order
 
-## Installing 
-You will need [Python 3+](https://www.python.org/downloads/), [discord.py](https://discordpy.readthedocs.io/en/latest/intro.html#installing) and [Discord Bot API key](https://discord.com/developers/applications).
+## Installing
+You will need Python 3+, discord.py, and Discord Bot API key.
+After that, simply navigate to bot directory, fill settings.json with proper information and run bot by running the command:
+>python bot.py
 
-After that, simply navigate to bot directory, fill settings.json with proper informations and run bot by running command:
-
-    python bot.py
-
-
-Keep in mind, that bot will run as long as command window is open, so you might want to host in on remote server.
+Keep in mind, that bot will run as long as the command window is open, so you might want to host in on a remote server.
