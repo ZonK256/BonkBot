@@ -1,0 +1,33 @@
+{
+    "dummy_section" : {
+        "server_name" : "You can put your server name here"
+    },
+    "general" : {
+        "api_key" : "Your API key",
+        "command_prefix" : "$",
+        "bot_status" : "Example status (keep in mind that it'll have 'Watching' prefix, i.e. 'Watching Example status'",
+        "kp_role" : 1
+    },
+    "categories" : {
+		"_comment" : "Put your channel categories IDs here, you can seperate them by ',' for including multiple category channels, but remember to keep them in [] brackets",
+        "thread_category" : [1,2,3],
+        "finished_kp_category" : [1],
+        "adopt_category" : [1],
+        "archive_category" : [1]
+    },
+    "channel_claimer" : {
+        "new_kp_category" : 1,
+        "unclaimed_channel_name" : "unclaimed_channel"
+    },
+    "levels" : {
+        "_comment" :"level_channel = channel, that will display leaderboard; target_message = embed, that will display leaderboard; offtopic_channel = channel = that bot will send message to upon levelling",
+        "level_channel" : 1,
+        "target_message" : 1,
+        "offtopic_channel" : 1
+    },
+    "temp_messages" : {
+        "_comment" :"Specify a channel ID and time in seconds, after message will be deleted (default 86400 = 24h)",
+        "channel" : 1,
+        "delete_after" : 86400
+    }
+}

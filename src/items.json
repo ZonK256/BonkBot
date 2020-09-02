@@ -1,0 +1,16 @@
+{
+    "1": {
+        "name": "Kość Williama Strauca",
+        "room_id": 744293624199643100,
+        "_comment1": "cmentarne-hienowisko",
+        "description": "Gratulacje! Znalazłeś nagrobek Williama Strauca. Przekonaj Hieny cmentarne aby otworzyły trumnę. ",
+        "find-threshold": 5
+    },
+    "2": {
+        "name": "Ozór bagiennika",
+        "room_id": 745284347103543300,
+        "_comment1": "ghost-party",
+        "description": "Gratulacje! Ochydne danie, Ozór bagiennika, jest dla Ciebie. Tylko nie zwymiotuj.",
+        "find-threshold": 5
+    }
+}
