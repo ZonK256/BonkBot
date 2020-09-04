@@ -30,7 +30,7 @@ class KPMove(commands.Cog):
         modes_settings = ['finished_kp_category', 'adopt_category', 'archive_category']
 
         if mode not in modes:
-            await ctx.send(content="Mode not found! Try: {}".format(modes), delete_after=10)
+            await ctx.send(content=f"Mode not found! Try: {modes}", delete_after=10)
             return
         selected_mode = modes_settings[modes.index(mode)]
         
