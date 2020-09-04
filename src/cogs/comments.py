@@ -14,7 +14,7 @@ class Comments(commands.Cog):
         if message.author == self.bot.user:
             return
         if message.content[:2] == "//":
-            msg = "{} Komentuje: \n/// {} ".format(message.author.name,message.content[2:])
+            msg = f"{message.author.name} Komentuje: \n/// {message.content[2:]}"
             await message.channel.send(content=msg,delete_after=7200)
             await message.delete()
         elif message.content == 'raise-exception':
