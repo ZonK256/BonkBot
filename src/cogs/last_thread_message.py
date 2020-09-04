@@ -27,7 +27,7 @@ class LastThreadMessage(commands.Cog):
     #     data = parse.urlencode(data).encode()
     #     req =  request.Request('https://pastebin.com/api/api_post.php', data=data)
     #     resp = request.urlopen(req)
-    #     await ctx.send("Listę znajdziesz pod linkiem: {}".format(resp.read().decode("utf-8")))
+    #     await ctx.send(f"Listę znajdziesz pod linkiem: {resp.read().decode("utf-8")}")
 
     async def get_character_list(self, guild, character_list):
         settings = self.bot.get_cog('Settings')
@@ -97,13 +97,13 @@ class LastThreadMessage(commands.Cog):
                 if character in character_list:
                     character_list.remove(character)
                 message_date = datetime.datetime.strptime(characters[character]['message_date'], '%Y-%m-%d %H:%M:%S.%f')
-                mini_msg = "{} / {} / <#{}>\n".format((today - message_date).days,character, characters[character]['channel_id'])
+                mini_msg = f"{(today - message_date).days} / {character} / <#{characters[character]['channel_id']}>\n"
                 if len(msg) + len(mini_msg) > 2000:
                     await ctx.send(msg)
                     msg = str()
                 msg += mini_msg
             await ctx.send(msg)
-            msg = "\nNie znaleziono: {}".format(character_list)
+            msg = f"\nNie znaleziono: {character_list}"
             await ctx.send(msg)
                    
 def setup(bot):
