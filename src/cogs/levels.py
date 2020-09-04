@@ -11,16 +11,16 @@ class Levels(commands.Cog):
         print(f'loaded cog: levels')
 
     async def draw_bar(self, experience, level):
-        steps = 20
+        steps = 30
         xp_to_current_level = 400*(level**2) - 400*(level) + 100
         xp_to_next_level = 400*((level+1)**2) - 400*(level) + 100
         xp_difference = xp_to_next_level - xp_to_current_level
         user_xp_delta = experience - xp_to_current_level
         progress_rounded = round(user_xp_delta/xp_difference*steps)
-        return "{} [{}{}] {}".format(level, "▓"*progress_rounded, "░"*(steps-progress_rounded), level+1)
-
+        return f"{level} [{'▓'*progress_rounded}{'░'*(steps-progress_rounded)}] {level+1}"
+        
     async def update_user(self, message, users, settings):
-        full_name = "{}#{}".format(message.author.name, message.author.discriminator)
+        full_name = f"{message.author.name}#{message.author.discriminator}"
         user_id = str(message.author.id)
 
         if not user_id in users:
@@ -38,16 +38,21 @@ class Levels(commands.Cog):
         if level_before < level_after:
             users[user_id]['level'] = level_after
             offtopic_channel = self.bot.get_channel(await settings.get_setting("levels","offtopic_channel"))
-            await offtopic_channel.send("{} osiąga poziom {}!".format(message.author.name, level_after))
+            await offtopic_channel.send(f"{message.author.name} osiąga poziom {level_after}!")
 
     async def update_leaderboard(self, users, settings):
         users_sorted = sorted(users.items(), key = lambda x: x[1]['experience'], reverse=True) 
         msg = str()
         counter = 1
         for line in users_sorted:
+            user_name = line[1]['name']
+            user_id = line[0]
             experience = line[1]['experience']
             level = line[1]['level']
-            msg += "*#{}*\n {} <@!{}>\n Postęp: {} \nPoziom: **{}** Punkty: **{}**\n\n".format(counter, line[1]['name'], line[0], await self.draw_bar(experience, level), level, (f"{experience:_}".replace('_', ' ')))
+            bar = await self.draw_bar(experience, level)
+            xp_formatted = f"{experience:_}".replace('_', ' ')
+
+            msg += f"*#{counter}*\n {user_name} <@!{user_id}>\n Postęp: {bar} \nPoziom: **{level}** Punkty: **{xp_formatted}**\n\n"
             counter += 1
             if counter%10 == 0:
                 msg += "~~~"
