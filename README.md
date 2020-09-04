@@ -15,7 +15,7 @@ Disclaimer: this bot (as for current state) is meant to be used with another gen
 * Move channel to a specific category in alphabetic order
 
 ## Installing
-You will need [Python 3+](https://www.python.org/downloads/), [discord.py](https://discordpy.readthedocs.io/en/latest/intro.html#installing), and [Discord Bot API key](https://discord.com/developers/applications).
+You will need [Python 3.6+](https://www.python.org/downloads/), [discord.py](https://discordpy.readthedocs.io/en/latest/intro.html#installing), and [Discord Bot API key](https://discord.com/developers/applications).
 After that, simply navigate to bot directory, fill settings.json with proper information and run bot by running the command:
 >python bot.py
 
