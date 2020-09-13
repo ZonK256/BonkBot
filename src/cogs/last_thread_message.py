@@ -29,33 +29,21 @@ class LastThreadMessage(commands.Cog):
     #     resp = request.urlopen(req)
     #     await ctx.send(f"Listę znajdziesz pod linkiem: {resp.read().decode("utf-8")}")
 
-    async def get_character_list(self, guild, character_list):
-        settings = self.bot.get_cog('Settings')
-        kp_role = kp_role = await settings.get_setting('general','kp_role')
-        character_list_temp = []
-        for user in guild.members:
-            for role in user.roles:
-                if role.id == kp_role:
-                    character_list_temp += user.nick.split("✨")
-        character_list_temp = list(filter(None, character_list_temp))
-        for elem in character_list_temp:
-            character_list.append(elem.split(" ")[0])
+    async def update_list(self, character, channel_id, user_id):
+        with open('./last_thread_message.json', 'r') as json_file:
+            characters = json.load(json_file)
+            if not character in characters[user_id]:
+                characters[user_id][character] = {}
 
-    async def update_list(self, character, channel_id):
-        with open('./last_thread_message.json', 'r') as f:
-            characters = json.load(f)
-            if not character in characters:
-                characters[character] = {}
+            characters[user_id][character]['message_date'] = str(datetime.datetime.now())
+            characters[user_id][character]['channel_id'] = channel_id
 
-            characters[character]['message_date'] = str(datetime.datetime.now())
-            characters[character]['channel_id'] = channel_id
-
-        with open('./last_thread_message.json', 'w') as f:
-            json.dump(characters, f)
+        with open('./last_thread_message.json', 'w') as json_file:
+            json.dump(characters, json_file, ensure_ascii=False, indent=4)
 
     async def verify_message(self, message, settings):
         thread_category = await settings.get_setting('categories','thread_category')
-        kp_role = await settings.get_setting('categories','thread_category')
+        kp_role = await settings.get_setting('general','kp_role')
         if message.channel.category_id not in thread_category:
             return True
         if message.author.bot == True:
@@ -71,40 +59,43 @@ class LastThreadMessage(commands.Cog):
         settings = self.bot.get_cog('Settings')
         if await self.verify_message(message, settings):
             return
+        user_id = str(message.author.id)
         character_list = list(filter(None, message.author.display_name.split("✨")))
         if len(character_list) == 1:
-            await self.update_list(character_list[0], message.channel.id)
+            await self.update_list(character_list[0].split(" ")[0], message.channel.id, user_id)
         else:
             for character in character_list:
                 line = message.content[:50]
                 if "/" in character:
                     for character_mini in character.split("/"):
                             if character_mini in line:
-                                await self.update_list(character, message.channel.id)
+                                await self.update_list(character, message.channel.id, user_id)
                 if character in line:
-                    await self.update_list(character, message.channel.id)
+                    await self.update_list(character, message.channel.id, user_id)
+
 
     @commands.command(aliases=['zrzut'])
     async def dump(self, ctx):
         with open('./last_thread_message.json', 'r') as f:
-            characters = json.load(f)
+            users = json.load(f)
             today = datetime.datetime.now()
-            msg = 'Dni temu / Postać / Pokój\n'
-            character_list = []
-            await self.get_character_list(ctx.guild, character_list)
-
-            for character in characters:
-                if character in character_list:
-                    character_list.remove(character)
-                message_date = datetime.datetime.strptime(characters[character]['message_date'], '%Y-%m-%d %H:%M:%S.%f')
-                mini_msg = f"{(today - message_date).days} / {character} / <#{characters[character]['channel_id']}>\n"
+            msg, mini_msg = str(), str()
+            for user_id in users:
+                mini_msg = f"<@{user_id}>\n"
+                for character in users[str(user_id)]:
+                    if users[str(user_id)][character]['message_date'] is not None:
+                        message_date = datetime.datetime.strptime(users[str(user_id)][character]['message_date'], '%Y-%m-%d %H:%M:%S.%f')
+                        time_delta = (today - message_date).days
+                        mini_msg += f"{character}: {time_delta} dni temu w pokoju <#{users[str(user_id)][character]['channel_id']}>\n"
+                    else:
+                        mini_msg += f"{character}: Nie znaleziono\n"
                 if len(msg) + len(mini_msg) > 2000:
                     await ctx.send(msg)
                     msg = str()
-                msg += mini_msg
+                msg += f"{mini_msg}\n"
+
             await ctx.send(msg)
-            msg = f"\nNie znaleziono: {character_list}"
-            await ctx.send(msg)
+
                    
 def setup(bot):
     bot.add_cog(LastThreadMessage(bot))
