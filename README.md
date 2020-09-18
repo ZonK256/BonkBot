@@ -1,3 +1,5 @@
+![bonk_img](https://cdn.discordapp.com/attachments/736138407394410546/756598712444125215/bonk.png)
+
 # BonkBot
 Discord bot made to enhance your roleplay experience 🎉
 
@@ -20,3 +22,5 @@ After that, simply navigate to bot directory, fill settings.json with proper inf
 >python bot.py
 
 Keep in mind, that bot will run as long as the command window is open, so you might want to host in on a remote server.
+
+>BonkBot image was created by DeerBoy. Idk Okay?#5505
