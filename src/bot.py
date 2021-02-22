@@ -2,14 +2,18 @@ import discord
 import os
 from discord.ext import commands
 import json
-from discord.ext.commands import has_permissions, CheckFailure
+from discord.ext.commands import has_permissions
 
-with open('./settings.json', 'r') as json_config:
+intents = discord.Intents.default()
+intents.members = True
+intents.presences  = True
+
+with open('./settings_global.json', 'r') as json_config:
     config = json.load(json_config)
 
 TOKEN = config["general"]["api_key"]
 
-bot = commands.Bot(command_prefix=config["general"]["command_prefix"])
+bot = commands.Bot(command_prefix=config["general"]["command_prefix"], intents=intents)
 
 @bot.command()
 @has_permissions(administrator=True)
@@ -26,8 +30,7 @@ async def unload(ctx, extension):
 @bot.command()
 @has_permissions(administrator=True)
 async def reload(ctx, extension):
-    bot.unload_extension(f'cogs.{extension}')
-    bot.load_extension(f'cogs.{extension}')
+    bot.reload_extension(f'cogs.{extension}')
     await ctx.send('Extension {} reloaded!'.format(extension))
 
 

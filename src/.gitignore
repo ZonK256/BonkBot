@@ -1,0 +1,6 @@
+cogs/__pycache__/
+.vscode/
+cogs/archive/
+json_backup/
+servers/*
+settings_global.json

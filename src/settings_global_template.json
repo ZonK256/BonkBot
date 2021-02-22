@@ -1,0 +1,10 @@
+{
+    "general":{
+        "api_key": "discord api key goes here",
+        "pastebin_api_key": "for dumping long strings, currently not used",
+        "open_weather_api_key": "for weather_forecast.py, current usage: 1 call per 3 days",
+        "command_prefix": "prefix for commands, i.e. $",
+        "bot_status": "your bot status, it'll display: Playing (your text)",
+        "_KEEP IN MIND": "replace this filename to settings_global.json after you're done here"
+    }
+}
